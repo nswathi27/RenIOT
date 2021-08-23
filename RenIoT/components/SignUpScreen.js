@@ -19,21 +19,26 @@ export default class SignUpScreen extends React.Component {
     }
 
     onSignUp = () => {
-        fetch('http://127.0.0.1:5000/userSignUp', {
+        fetch('http://localhost:5000/userSignUp', {
             method: 'POST',
+            mode: 'cors',
             headers: {
-              'Content-type': 'application/json',
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                uname :  this.state.username,
-                upassword : this.state.password,
-                uemail: this.state.email,
-                phoneno: this.state.phoneno,
-            }),
+              username: this.state.username,
+              password: this.state.password,
+              phoneno: this.state.phoneno,
+              email: this.state.email
+            })
           })
-            .then(res => res.json())
-            .then(res => console.log(res)); 
-
+            .then(response => response.json())
+            .then(json => {
+              console.log(json)
+            })
+            .catch(error => {
+             console.log(error)
+            });
         this.props.navigation.navigate('BoxSignUp')
     }
 
@@ -102,8 +107,8 @@ export default class SignUpScreen extends React.Component {
                 </Animatable.View>
 
                 <TouchableOpacity
-                   onPress={() => this.validateEmail()}
-                   style={{ width: 150, backgroundColor: '#0d47a1', padding: 10, alignItems: 'center', justifyContent: 'center', borderRadius: 40, marginTop: 30 }}
+                    onPress={() => this.validateEmail()}
+                    style={{ width: 150, backgroundColor: '#0d47a1', padding: 10, alignItems: 'center', justifyContent: 'center', borderRadius: 40, marginTop: 30 }}
                 >
                     <Text style={{ textAlign: 'center', color: '#FFF', fontSize: 16 }}>Sign Up Here</Text>
                 </TouchableOpacity>

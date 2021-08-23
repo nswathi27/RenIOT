@@ -17,21 +17,28 @@ export default class BoxSignUpScreen extends React.Component {
     }
 
     onBoxSignUp = () => {
-        fetch('http://127.0.0.1:5000/boxSignUp', {
-            method: 'POST',
-            headers: {
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify({
-                uname :  this.state.boxUserName,
-                upassword : this.state.boxPassword
-            }),
+
+        fetch('http://localhost:5000/boxSignUp', {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: this.state.boxUserName,
+            password: this.state.boxPassword
           })
-            .then(res => res.json())
-            .then(res => console.log(res)); 
+        })
+          .then(response => response.json())
+          .then(json => {
+            console.log(json)
+          })
+          .catch(error => {
+           console.log(error)
+          });
 
         this.props.navigation.navigate('RenIoT')
-    }
+    };
 
     render() {
         return (
