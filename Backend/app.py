@@ -70,6 +70,17 @@ class Board(db.Model, UserMixin):
     boardid = db.Column('boardID', db.Integer, primary_key=True)
     boardpassword = db.Column('boardPassword', db.String(33))
 
+# created the weather model for storing the weather data from the box 
+class weatherData(db.Model, UserMixin):
+    __tablename__='weatherData'
+    tempreature=db.Column('Tempreature', db.String(40))
+    location=db.Column('Location',db.String(40))
+    weatherdata=db.Column('weatherdata',db.String(40))
+
+    def __init__(self, tempreature, location, weatherdata):
+        self.tempreature=tempreature
+        self.location=location
+        self.weatherdata=weatherdata
 
 # db.create_all()
 
@@ -228,6 +239,13 @@ def Password_Update():
                 flash("Password Doesnt Match", "danger")
                 return redirect(url_for('Password_Update'))
         return render_template("pw.html")
+
+
+#Created an temporary app route to display the weatherdata which get accessed from the weather table
+@app.route('/weather', methods=['GET'])
+def getWeatherData():
+    return render_template("weather.html", wdata=weatherData.query.all())
+
 
 
 @app.before_request
